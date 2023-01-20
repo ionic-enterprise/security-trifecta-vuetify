@@ -6,11 +6,18 @@
     "dev": "vite",
     "lint": "eslint . --fix --ignore-path .gitignore",
     "prepare": "husky install",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:cov": "vitest run --coverage",
+    "test:dev": "vitest"
   },
   "dependencies": {
     "@mdi/font": "~7.1.96",
+    "@vitest/coverage-c8": "~0.27.2",
+    "@vue/test-utils": "~2.2.7",
+    "jsdom": "~21.0.0",
     "roboto-fontface": "*",
+    "vitest": "~0.27.2",
     "vue": "^3.2.38",
     "vue-router": "^4.0.0",
     "vuetify": "^3.0.0",
