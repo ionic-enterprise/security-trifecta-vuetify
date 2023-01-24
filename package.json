@@ -12,9 +12,12 @@
     "test:dev": "vitest"
   },
   "dependencies": {
+    "@capacitor/core": "~4.6.2",
+    "@ionic-enterprise/identity-vault": "~5.9.5",
     "@mdi/font": "~7.1.96",
     "@vitest/coverage-c8": "~0.27.2",
     "@vue/test-utils": "~2.2.7",
+    "axios": "~1.2.3",
     "jsdom": "~21.0.0",
     "roboto-fontface": "*",
     "vitest": "~0.27.2",
