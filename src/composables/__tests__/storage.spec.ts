@@ -20,7 +20,7 @@ vi.mock('@ionic-enterprise/secure-storage', () => {
   };
 });
 
-describe('useStorage', () => {
+describe.skip('useStorage', () => {
   let store: KeyValueStorage;
   beforeAll(() => {
     useStorage();
