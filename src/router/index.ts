@@ -35,17 +35,6 @@ const routes = [
       },
     ],
   },
-  {
-    path: '/unlock',
-    component: () => import('@/layouts/stand-alone/StandAlone.vue'),
-    children: [
-      {
-        path: '',
-        name: 'Unlock',
-        component: () => import(/* webpackChunkName: "login" */ '@/views/UnlockPage.vue'),
-      },
-    ],
-  },
 ];
 
 const router = createRouter({
