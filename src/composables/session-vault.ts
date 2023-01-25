@@ -1,8 +1,8 @@
 import { useVaultFactory } from '@/composables/vault-factory';
 import { Session } from '@/models';
 import router from '@/router';
-import { BiometricPermissionState, Device, DeviceSecurityType, VaultType } from '@ionic-enterprise/identity-vault';
 import { Capacitor } from '@capacitor/core';
+import { BiometricPermissionState, Device, DeviceSecurityType, VaultType } from '@ionic-enterprise/identity-vault';
 
 export type UnlockMode = 'Device' | 'SessionPIN' | 'NeverLock' | 'ForceLogin';
 

@@ -1,10 +1,10 @@
-import { Session } from '@/models';
-import { useSessionVault, UnlockMode } from '@/composables/session-vault';
+import { UnlockMode, useSessionVault } from '@/composables/session-vault';
 import { useVaultFactory } from '@/composables/vault-factory';
-import { BiometricPermissionState, Device, DeviceSecurityType, VaultType } from '@ionic-enterprise/identity-vault';
+import { Session } from '@/models';
 import router from '@/router';
-import { beforeEach, describe, expect, it, Mock, vi } from 'vitest';
 import { Capacitor } from '@capacitor/core';
+import { BiometricPermissionState, Device, DeviceSecurityType, VaultType } from '@ionic-enterprise/identity-vault';
+import { beforeEach, describe, expect, it, Mock, vi } from 'vitest';
 
 vi.mock('@capacitor/core');
 vi.mock('@/composables/vault-factory');

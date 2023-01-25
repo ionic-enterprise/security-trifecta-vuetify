@@ -1,5 +1,5 @@
-import { vi } from 'vitest';
 import { IdentityVaultConfig } from '@ionic-enterprise/identity-vault';
+import { vi } from 'vitest';
 
 let onLockCallback: undefined | (() => Promise<void>);
 let onUnlockCallback: undefined | (() => Promise<void>);
@@ -10,7 +10,6 @@ const mockVault = {
   setValue: vi.fn().mockResolvedValue(undefined),
   getValue: vi.fn().mockResolvedValue(undefined),
   updateConfig: vi.fn().mockResolvedValue(undefined),
-  doesVaultExist: vi.fn().mockResolvedValue(false),
   isEmpty: vi.fn().mockResolvedValue(false),
   isLocked: vi.fn().mockResolvedValue(false),
   onLock: vi.fn().mockImplementation((cb: () => Promise<void>) => (onLockCallback = cb)),
