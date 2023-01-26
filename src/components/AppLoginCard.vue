@@ -64,9 +64,9 @@ const doLogin = async () => {
   const { login } = useAuth();
   if (await login(email.value, password.value)) {
     const sync = useSync();
-    const { setUnlockMode } = useSessionVault();
+    const { initializeUnlockMode } = useSessionVault();
     await sync();
-    await setUnlockMode('NeverLock');
+    await initializeUnlockMode();
     emit('success');
   } else {
     signinError.value = true;

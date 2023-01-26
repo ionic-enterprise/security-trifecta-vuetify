@@ -118,6 +118,73 @@ describe('useSessionVault', () => {
     });
   });
 
+  describe('initialize unlock type', () => {
+    describe('on mobile', () => {
+      beforeEach(() => {
+        (Capacitor.isNativePlatform as Mock).mockReturnValue(true);
+      });
+
+      it('uses a secure storage if no system PIN is set', async () => {
+        Device.isSystemPasscodeSet = vi.fn().mockResolvedValue(false);
+        const expectedConfig = {
+          ...mockVault.config,
+          type: VaultType.SecureStorage,
+          deviceSecurityType: DeviceSecurityType.None,
+        };
+        const { initializeUnlockMode } = useSessionVault();
+        await initializeUnlockMode();
+        expect(mockVault.updateConfig).toHaveBeenCalledTimes(1);
+        expect(mockVault.updateConfig).toHaveBeenCalledWith(expectedConfig);
+      });
+
+      it('uses device security if a system PIN is set and biometrics is enabled', async () => {
+        Device.isSystemPasscodeSet = vi.fn().mockResolvedValue(true);
+        Device.isBiometricsEnabled = vi.fn().mockResolvedValue(true);
+        const expectedConfig = {
+          ...mockVault.config,
+          type: VaultType.DeviceSecurity,
+          deviceSecurityType: DeviceSecurityType.Both,
+        };
+        const { initializeUnlockMode } = useSessionVault();
+        await initializeUnlockMode();
+        expect(mockVault.updateConfig).toHaveBeenCalledTimes(1);
+        expect(mockVault.updateConfig).toHaveBeenCalledWith(expectedConfig);
+      });
+
+      it('uses system PIN if a system PIN is set and biometrics is not enabled', async () => {
+        Device.isSystemPasscodeSet = vi.fn().mockResolvedValue(true);
+        Device.isBiometricsEnabled = vi.fn().mockResolvedValue(false);
+        const expectedConfig = {
+          ...mockVault.config,
+          type: VaultType.DeviceSecurity,
+          deviceSecurityType: DeviceSecurityType.SystemPasscode,
+        };
+        const { initializeUnlockMode } = useSessionVault();
+        await initializeUnlockMode();
+        expect(mockVault.updateConfig).toHaveBeenCalledTimes(1);
+        expect(mockVault.updateConfig).toHaveBeenCalledWith(expectedConfig);
+      });
+    });
+
+    describe('on web', () => {
+      beforeEach(() => {
+        (Capacitor.isNativePlatform as Mock).mockReturnValue(false);
+      });
+
+      it('uses secure storage', async () => {
+        const expectedConfig = {
+          ...mockVault.config,
+          type: VaultType.SecureStorage,
+          deviceSecurityType: DeviceSecurityType.None,
+        };
+        const { initializeUnlockMode } = useSessionVault();
+        await initializeUnlockMode();
+        expect(mockVault.updateConfig).toHaveBeenCalledTimes(1);
+        expect(mockVault.updateConfig).toHaveBeenCalledWith(expectedConfig);
+      });
+    });
+  });
+
   describe('setUnlockMode', () => {
     it.each([
       ['Device' as UnlockMode, VaultType.DeviceSecurity, DeviceSecurityType.Both],

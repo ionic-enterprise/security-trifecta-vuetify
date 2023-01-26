@@ -158,21 +158,20 @@ describe('app login card', () => {
         expect(sync).toHaveBeenCalledTimes(1);
       });
 
-      it('sets the unlock mode', async () => {
+      it('initializes the unlock mode', async () => {
         const wrapper = mountComponent();
         const button = wrapper.find('[data-testid="signin-button"]');
         const email = wrapper.findComponent('[data-testid="email-input"]');
         const password = wrapper.findComponent('[data-testid="password-input"]');
 
-        const { setUnlockMode } = useSessionVault();
+        const { initializeUnlockMode } = useSessionVault();
 
         await email.setValue('foobar');
         await password.setValue('mypassword');
         await button.trigger('click');
         await flushPromises();
 
-        expect(setUnlockMode).toHaveBeenCalledTimes(1);
-        expect(setUnlockMode).toHaveBeenCalledWith('NeverLock');
+        expect(initializeUnlockMode).toHaveBeenCalledTimes(1);
       });
 
       it('emits success', async () => {

@@ -4,7 +4,7 @@ import router from '@/router';
 import { Capacitor } from '@capacitor/core';
 import { BiometricPermissionState, Device, DeviceSecurityType, VaultType } from '@ionic-enterprise/identity-vault';
 
-export type UnlockMode = 'Device' | 'SessionPIN' | 'NeverLock' | 'ForceLogin';
+export type UnlockMode = 'Device' | 'SessionPIN' | 'SystemPIN' | 'NeverLock' | 'ForceLogin';
 
 const key = 'session';
 let session: Session | null | undefined;
@@ -61,6 +61,22 @@ const provision = async (): Promise<void> => {
   }
 };
 
+const initializeUnlockMode = async (): Promise<void> => {
+  if (Capacitor.isNativePlatform()) {
+    if (await Device.isSystemPasscodeSet()) {
+      if (await Device.isBiometricsEnabled()) {
+        await setUnlockMode('Device');
+      } else {
+        await setUnlockMode('SystemPIN');
+      }
+    } else {
+      await setUnlockMode('NeverLock');
+    }
+  } else {
+    await setUnlockMode('NeverLock');
+  }
+};
+
 const setUnlockMode = async (unlockMode: UnlockMode): Promise<void> => {
   let type: VaultType;
   let deviceSecurityType: DeviceSecurityType;
@@ -70,6 +86,12 @@ const setUnlockMode = async (unlockMode: UnlockMode): Promise<void> => {
       await provision();
       type = VaultType.DeviceSecurity;
       deviceSecurityType = DeviceSecurityType.Both;
+      break;
+
+    case 'SystemPIN':
+      await provision();
+      type = VaultType.DeviceSecurity;
+      deviceSecurityType = DeviceSecurityType.SystemPasscode;
       break;
 
     case 'SessionPIN':
@@ -112,6 +134,7 @@ export const useSessionVault = () => {
     clearSession,
     getSession,
     setSession,
+    initializeUnlockMode,
     setUnlockMode,
     getVaultType,
   };
