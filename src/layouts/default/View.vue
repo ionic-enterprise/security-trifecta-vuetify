@@ -7,7 +7,7 @@
 
         <v-btn icon="mdi-refresh"></v-btn>
 
-        <v-btn icon="mdi-logout"></v-btn>
+        <v-btn icon="mdi-logout" @click="routeToPage('/logout')"></v-btn>
       </template>
     </v-app-bar>
 
@@ -18,5 +18,11 @@
 </template>
 
 <script lang="ts" setup>
-//
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+const routeToPage = (page: string) => {
+  router.push(page);
+};
 </script>

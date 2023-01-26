@@ -1,5 +1,5 @@
 <template>
-  <AppUnlockCard />
+  <AppLoginCard @success="$router.replace('/home')" />
 </template>
 
 <script setup lang="ts">

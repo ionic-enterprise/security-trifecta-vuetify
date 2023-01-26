@@ -1,7 +1,13 @@
 <template>
-  <div>Logout</div>
+  <div></div>
 </template>
 
 <script setup lang="ts">
-//
+import { useRouter } from 'vue-router';
+import { useAuth } from '@/composables/auth';
+
+const { logout } = useAuth();
+const router = useRouter();
+
+logout().then(() => router.replace('/login'));
 </script>

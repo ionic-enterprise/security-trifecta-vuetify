@@ -1,5 +1,6 @@
 // Composables
-import { createRouter, createWebHistory } from 'vue-router';
+import { useSessionVault } from '@/composables/session-vault';
+import { createRouter, createWebHistory, NavigationGuardNext, RouteLocationNormalized } from 'vue-router';
 
 const routes = [
   {
@@ -8,8 +9,14 @@ const routes = [
     children: [
       {
         path: '',
+        name: 'Start',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/StartPage.vue'),
+      },
+      {
+        path: 'home',
         name: 'TastingNotes',
         component: () => import(/* webpackChunkName: "home" */ '@/views/TastingNotesPage.vue'),
+        meta: { requiresAuth: true },
       },
     ],
   },
@@ -37,9 +44,26 @@ const routes = [
   },
 ];
 
+const checkAuthStatus = async (
+  to: RouteLocationNormalized,
+  from: RouteLocationNormalized,
+  next: NavigationGuardNext
+) => {
+  if (to.matched.some((r) => r.meta.requiresAuth)) {
+    const { getSession } = useSessionVault();
+    const session = await getSession();
+    if (!session) {
+      return next('/login');
+    }
+  }
+  next();
+};
+
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
+
+router.beforeEach(checkAuthStatus);
 
 export default router;
