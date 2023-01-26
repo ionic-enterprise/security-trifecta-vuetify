@@ -46,7 +46,6 @@ describe('app unlock card', () => {
     });
 
     it('emits unlocked', async () => {
-      const { getSession } = useSessionVault();
       const wrapper = mountComponent();
       const button = wrapper.findComponent('[data-testid="unlock-button"]');
       await button.trigger('click');
