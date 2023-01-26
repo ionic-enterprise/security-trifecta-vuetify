@@ -3,6 +3,7 @@ import { useTastingNotes } from '@/composables/tasting-notes';
 import { useTastingNotesAPI } from '@/composables/tasting-notes-api';
 import { useTastingNotesDatabase } from '@/composables/tasting-notes-database';
 import { TastingNote } from '@/models';
+import { Editable } from '@/models/Editable';
 import { Capacitor } from '@capacitor/core';
 import { beforeEach, describe, expect, it, Mock, vi } from 'vitest';
 
@@ -13,6 +14,7 @@ vi.mock('@/composables/tasting-notes-database');
 
 describe('useTastingNotes', () => {
   let tastingNotes: Array<TastingNote>;
+  let editableNotes: Array<Editable<TastingNote>>;
 
   const initializeTestData = () => {
     tastingNotes = [
@@ -41,6 +43,7 @@ describe('useTastingNotes', () => {
         teaCategoryId: 7,
       },
     ];
+    editableNotes = tastingNotes.map((n) => ({ editMode: 'view', data: n }));
   };
 
   beforeEach(() => {
@@ -122,7 +125,7 @@ describe('useTastingNotes', () => {
       it('populates the notes data', async () => {
         const { refresh, notes } = useTastingNotes();
         await refresh();
-        expect(notes.value).toEqual(tastingNotes);
+        expect(notes.value).toEqual(editableNotes);
       });
     });
 
@@ -137,7 +140,7 @@ describe('useTastingNotes', () => {
       it('populates the notes data', async () => {
         const { refresh, notes } = useTastingNotes();
         await refresh();
-        expect(notes.value).toEqual(tastingNotes);
+        expect(notes.value).toEqual(editableNotes);
       });
     });
   });
@@ -217,7 +220,7 @@ describe('useTastingNotes', () => {
         it('adds the note to the notes list', async () => {
           await save(note);
           expect(notes.value.length).toEqual(4);
-          expect(notes.value[3]).toEqual({ id: 73, ...note });
+          expect(notes.value[3]).toEqual({ editMode: 'view', data: { id: 73, ...note } });
         });
       });
 
@@ -240,7 +243,7 @@ describe('useTastingNotes', () => {
         it('adds the note to the notes list', async () => {
           await save(note);
           expect(notes.value.length).toEqual(4);
-          expect(notes.value[3]).toEqual({ id: 73, ...note });
+          expect(notes.value[3]).toEqual({ editMode: 'view', data: { id: 73, ...note } });
         });
       });
     });
@@ -276,7 +279,7 @@ describe('useTastingNotes', () => {
         it('update the note to the notes list', async () => {
           await save(note);
           expect(notes.value.length).toEqual(3);
-          expect(notes.value[0]).toEqual(note);
+          expect(notes.value[0].data).toEqual(note);
         });
       });
 
@@ -299,7 +302,7 @@ describe('useTastingNotes', () => {
         it('updates the note in the notes list', async () => {
           await save(note);
           expect(notes.value.length).toEqual(3);
-          expect(notes.value[0]).toEqual(note);
+          expect(notes.value[0].data).toEqual(note);
         });
       });
     });
@@ -326,8 +329,8 @@ describe('useTastingNotes', () => {
         const note = { ...tastingNotes[1] };
         await remove(note);
         expect(notes.value.length).toEqual(2);
-        expect(notes.value[0].id).toEqual(1);
-        expect(notes.value[1].id).toEqual(42);
+        expect(notes.value[0].data.id).toEqual(1);
+        expect(notes.value[1].data.id).toEqual(42);
       });
     });
 
@@ -344,8 +347,8 @@ describe('useTastingNotes', () => {
         const note = { ...tastingNotes[1] };
         await remove(note);
         expect(notes.value.length).toEqual(2);
-        expect(notes.value[0].id).toEqual(1);
-        expect(notes.value[1].id).toEqual(42);
+        expect(notes.value[0].data.id).toEqual(1);
+        expect(notes.value[1].data.id).toEqual(42);
       });
     });
   });
