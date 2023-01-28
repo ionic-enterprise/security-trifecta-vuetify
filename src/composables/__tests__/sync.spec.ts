@@ -1,17 +1,17 @@
 import { useSync } from '@/composables/sync';
-import { useTastingNotes } from '@/composables/tasting-notes';
-import { useTastingNotesAPI } from '@/composables/tasting-notes-api';
-import { useTastingNotesDatabase } from '@/composables/tasting-notes-database';
-import { useTeaCategories } from '@/composables/tea-categories';
-import { TastingNote } from '@/models';
+import { useTastingNotes } from '@/tasting-notes/composables/tasting-notes';
+import { useTastingNotesAPI } from '@/tasting-notes/composables/tasting-notes-api';
+import { useTastingNotesDatabase } from '@/tasting-notes/composables/tasting-notes-database';
+import { useTeaCategories } from '@/tea-categories/composables/tea-categories';
+import { TastingNote } from '@/tasting-notes/TastingNote';
 import { beforeEach, describe, expect, it, Mock, vi } from 'vitest';
 
 vi.mock('@capacitor/core');
 vi.mock('@/composables/database');
-vi.mock('@/composables/tasting-notes');
-vi.mock('@/composables/tasting-notes-api');
-vi.mock('@/composables/tasting-notes-database');
-vi.mock('@/composables/tea-categories');
+vi.mock('@/tasting-notes/composables/tasting-notes');
+vi.mock('@/tasting-notes/composables/tasting-notes-api');
+vi.mock('@/tasting-notes/composables/tasting-notes-database');
+vi.mock('@/tea-categories/composables/tea-categories');
 
 describe('useSync', () => {
   let tastingNotes: Array<TastingNote>;

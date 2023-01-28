@@ -15,7 +15,7 @@ const routes = [
       {
         path: 'home',
         name: 'TastingNotes',
-        component: () => import(/* webpackChunkName: "home" */ '@/views/TastingNotesPage.vue'),
+        component: () => import(/* webpackChunkName: "home" */ '@/tasting-notes/TastingNotesPage.vue'),
         meta: { requiresAuth: true },
       },
     ],
@@ -27,7 +27,7 @@ const routes = [
       {
         path: '',
         name: 'Login',
-        component: () => import(/* webpackChunkName: "login" */ '@/views/LoginPage.vue'),
+        component: () => import(/* webpackChunkName: "auth" */ '@/auth/LoginPage.vue'),
       },
     ],
   },
@@ -38,7 +38,7 @@ const routes = [
       {
         path: '',
         name: 'Logout',
-        component: () => import(/* webpackChunkName: "login" */ '@/views/LogoutPage.vue'),
+        component: () => import(/* webpackChunkName: "auth" */ '@/auth/LogoutPage.vue'),
       },
     ],
   },

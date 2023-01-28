@@ -1,8 +1,8 @@
-import { useTastingNotes } from '@/composables/tasting-notes';
-import { useTastingNotesAPI } from '@/composables/tasting-notes-api';
-import { useTastingNotesDatabase } from '@/composables/tasting-notes-database';
-import { useTeaCategories } from '@/composables/tea-categories';
-import { TastingNote } from '@/models';
+import { useTastingNotes } from '@/tasting-notes/composables/tasting-notes';
+import { useTastingNotesAPI } from '@/tasting-notes/composables/tasting-notes-api';
+import { useTastingNotesDatabase } from '@/tasting-notes/composables/tasting-notes-database';
+import { TastingNote } from '@/tasting-notes/TastingNote';
+import { useTeaCategories } from '@/tea-categories/composables/tea-categories';
 
 const syncTastingNotes = async (): Promise<void> => {
   const { getAll, reset } = useTastingNotesDatabase();
