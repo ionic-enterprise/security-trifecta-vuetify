@@ -3,7 +3,7 @@
     <v-app-bar :elevation="2">
       <v-app-bar-title>Tasting Notes</v-app-bar-title>
       <template v-slot:append>
-        <v-btn icon="mdi-theme-light-dark"></v-btn>
+        <v-btn icon="mdi-theme-light-dark" @click="toggle"></v-btn>
 
         <v-btn icon="mdi-refresh"></v-btn>
 
@@ -18,7 +18,10 @@
 </template>
 
 <script lang="ts" setup>
+import { useThemeSwitcher } from '@/composables/theme-switcher';
 import { useRouter } from 'vue-router';
+
+const { toggle } = useThemeSwitcher();
 
 const router = useRouter();
 
