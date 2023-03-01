@@ -23,6 +23,13 @@ Follow all the normal steps:
 
 This application takes advantage of a couple of `@ionic-enterprise` solutions. Thus you need to have purchased access to those solutions and have a valid enterprise key in order to try this application.
 
+## Developing
+
+To run the app in the dev server and continuously run the tests for TDD purposes:
+
+1. `npm run dev`
+1. `npm run test:dev`
+
 ## Credentials
 
 This application uses a live backend API that requires a login. Unless you have your own credentials, please use the following:
