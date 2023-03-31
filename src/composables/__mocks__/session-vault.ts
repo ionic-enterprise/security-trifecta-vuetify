@@ -4,9 +4,10 @@ let onLockCallback: (() => Promise<void>) | undefined;
 
 const canUnlock = vi.fn().mockResolvedValue(false);
 const canUseLocking = vi.fn().mockReturnValue(false);
-const clearSession = vi.fn().mockResolvedValue(undefined);
-const setSession = vi.fn().mockResolvedValue(undefined);
-const getSession = vi.fn().mockResolvedValue(undefined);
+const clear = vi.fn().mockResolvedValue(undefined);
+const unlock = vi.fn().mockResolvedValue(undefined);
+const setValue = vi.fn().mockResolvedValue(undefined);
+const getValue = vi.fn().mockResolvedValue(undefined);
 const initializeUnlockMode = vi.fn().mockResolvedValue(undefined);
 const setUnlockMode = vi.fn().mockResolvedValue(undefined);
 const onLock = vi.fn().mockImplementation((cb: () => Promise<void>) => (onLockCallback = cb));
@@ -19,9 +20,10 @@ const lock = vi.fn().mockImplementation(() => {
 export const useSessionVault = vi.fn().mockReturnValue({
   canUnlock,
   canUseLocking,
-  clearSession,
-  setSession,
-  getSession,
+  clear,
+  unlock,
+  getValue,
+  setValue,
   initializeUnlockMode,
   setUnlockMode,
   onLock,

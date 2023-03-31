@@ -1,4 +1,3 @@
-import { useSessionVault } from '@/composables/session-vault';
 import { Editable } from '@/models/Editable';
 import { useTastingNotes } from '@/tasting-notes/composables/tasting-notes';
 import { useTastingNotesAPI } from '@/tasting-notes/composables/tasting-notes-api';
@@ -49,21 +48,11 @@ describe('useTastingNotes', () => {
   beforeEach(() => {
     const { getAll: getAllFromAPI } = useTastingNotesAPI();
     const { getAll: getAllFromDatabase } = useTastingNotesDatabase();
-    const { getSession } = useSessionVault();
     initializeTestData();
     vi.clearAllMocks();
     (getAllFromAPI as Mock).mockResolvedValue(tastingNotes);
     (getAllFromDatabase as Mock).mockResolvedValue(tastingNotes);
     (Capacitor.isNativePlatform as Mock).mockReturnValue(false);
-    (getSession as Mock).mockResolvedValue({
-      user: {
-        id: 314159,
-        firstName: 'Testy',
-        lastName: 'McTest',
-        email: 'test@test.com',
-      },
-      token: '123456789',
-    });
   });
 
   describe('load', () => {

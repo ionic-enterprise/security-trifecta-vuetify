@@ -4,3 +4,6 @@ project(':capacitor-android').projectDir = new File('../node_modules/@capacitor/
 
 include ':capacitor-splash-screen'
 project(':capacitor-splash-screen').projectDir = new File('../node_modules/@capacitor/splash-screen/android')
+
+include ':ionic-enterprise-auth'
+project(':ionic-enterprise-auth').projectDir = new File('../node_modules/@ionic-enterprise/auth/android')

@@ -20,8 +20,8 @@ const router = useRouter();
 canUnlock().then((x) => (showUnlock.value = x));
 
 const redoLogin = () => {
-  const { clearSession } = useSessionVault();
-  clearSession();
+  const { clear } = useSessionVault();
+  clear();
   showUnlock.value = false;
 };
 

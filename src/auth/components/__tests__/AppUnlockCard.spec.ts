@@ -37,12 +37,12 @@ describe('app unlock card', () => {
       expect(button.text()).toBe('Unlock');
     });
 
-    it('restores the session', async () => {
-      const { getSession } = useSessionVault();
+    it('unlocks the session', async () => {
+      const { unlock } = useSessionVault();
       const wrapper = mountComponent();
       const button = wrapper.findComponent('[data-testid="unlock-button"]');
       await button.trigger('click');
-      expect(getSession).toHaveBeenCalledTimes(1);
+      expect(unlock).toHaveBeenCalledTimes(1);
     });
 
     it('emits unlocked', async () => {

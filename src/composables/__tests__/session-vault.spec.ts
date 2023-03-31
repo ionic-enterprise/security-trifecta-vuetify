@@ -1,26 +1,17 @@
 import { UnlockMode, useSessionVault } from '@/composables/session-vault';
 import { useVaultFactory } from '@/composables/vault-factory';
-import { Session } from '@/models';
 import router from '@/router';
 import { Capacitor } from '@capacitor/core';
 import { BiometricPermissionState, Device, DeviceSecurityType, VaultType } from '@ionic-enterprise/identity-vault';
 import { beforeEach, describe, expect, it, Mock, vi } from 'vitest';
 
+vi.mock('@/auth/composables/auth');
 vi.mock('@capacitor/core');
 vi.mock('@/composables/vault-factory');
 vi.mock('@/router');
 
 describe('useSessionVault', () => {
   let mockVault: any;
-  const testSession: Session = {
-    user: {
-      id: 314159,
-      firstName: 'Testy',
-      lastName: 'McTest',
-      email: 'test@test.com',
-    },
-    token: '123456789',
-  };
 
   beforeEach(() => {
     const { createVault } = useVaultFactory();
@@ -37,84 +28,37 @@ describe('useSessionVault', () => {
     (Capacitor.isNativePlatform as Mock).mockReturnValue(true);
   });
 
-  it('starts with an undefined session', async () => {
-    const { getSession } = useSessionVault();
-    expect(await getSession()).toBeUndefined();
+  describe('get value', () => {
+    it('calls the vault get value', async () => {
+      const { getValue } = useSessionVault();
+      await getValue('foo-key');
+      expect(mockVault.getValue).toHaveBeenCalledTimes(1);
+      expect(mockVault.getValue).toHaveBeenCalledWith('foo-key');
+    });
   });
 
-  describe('setSession', () => {
-    it('sets the session', async () => {
-      const { getSession, setSession } = useSessionVault();
-      await setSession(testSession);
-      expect(await getSession()).toEqual(testSession);
-    });
-
-    it('stores the session in the vault', async () => {
-      const { setSession } = useSessionVault();
-      await setSession(testSession);
+  describe('set value', () => {
+    it('calls the vault set value', async () => {
+      const { setValue } = useSessionVault();
+      await setValue('foo-key', 'some random value');
       expect(mockVault.setValue).toHaveBeenCalledTimes(1);
-      expect(mockVault.setValue).toHaveBeenCalledWith('session', testSession);
+      expect(mockVault.setValue).toHaveBeenCalledWith('foo-key', 'some random value');
     });
   });
 
-  describe('clearSession', () => {
-    beforeEach(async () => {
-      const { setSession } = useSessionVault();
-      await setSession(testSession);
-    });
-
-    it('clears the session', async () => {
-      const { getSession, clearSession } = useSessionVault();
-      await clearSession();
-      expect(await getSession()).toBeUndefined();
-    });
-
-    it('removes the vault', async () => {
-      const { clearSession } = useSessionVault();
-      await clearSession();
+  describe('clear', () => {
+    it('calls the vault unlock', async () => {
+      const { clear } = useSessionVault();
+      await clear();
       expect(mockVault.clear).toHaveBeenCalledTimes(1);
     });
-
-    it('resets the unlock mode', async () => {
-      const { clearSession } = useSessionVault();
-      const expectedConfig = {
-        ...mockVault.config,
-        type: VaultType.SecureStorage,
-        deviceSecurityType: DeviceSecurityType.None,
-      };
-      await clearSession();
-      expect(mockVault.updateConfig).toHaveBeenCalledTimes(1);
-      expect(mockVault.updateConfig).toHaveBeenCalledWith(expectedConfig);
-    });
   });
 
-  describe('getSession', () => {
-    beforeEach(async () => {
-      const { clearSession } = useSessionVault();
-      await clearSession();
-    });
-
-    it('gets the session from the vault', async () => {
-      const { getSession } = useSessionVault();
-      (mockVault.getValue as Mock).mockResolvedValue(testSession);
-      expect(await getSession()).toEqual(testSession);
-      expect(mockVault.getValue).toHaveBeenCalledTimes(1);
-      expect(mockVault.getValue).toHaveBeenCalledWith('session');
-    });
-
-    it('caches the retrieved session', async () => {
-      const { getSession } = useSessionVault();
-      (mockVault.getValue as Mock).mockResolvedValue(testSession);
-      await getSession();
-      await getSession();
-      expect(mockVault.getValue).toHaveBeenCalledTimes(1);
-    });
-
-    it('caches the session set via setSession', async () => {
-      const { getSession, setSession } = useSessionVault();
-      await setSession(testSession);
-      expect(await getSession()).toEqual(testSession);
-      expect(mockVault.getValue).not.toHaveBeenCalled();
+  describe('unlock', () => {
+    it('calls the vault unlock', async () => {
+      const { unlock } = useSessionVault();
+      await unlock();
+      expect(mockVault.unlock).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -270,16 +214,7 @@ describe('useSessionVault', () => {
 
   describe('on lock', () => {
     beforeEach(async () => {
-      const { setSession } = useSessionVault();
-      await setSession(testSession);
       (mockVault.getValue as Mock).mockResolvedValue(undefined);
-    });
-
-    it('clears the session cache', async () => {
-      const { getSession } = useSessionVault();
-      mockVault.lock();
-      await getSession();
-      expect(mockVault.getValue).toHaveBeenCalledTimes(1);
     });
 
     it('goes to the login page', () => {

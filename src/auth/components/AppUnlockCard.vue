@@ -28,8 +28,8 @@ import { useSessionVault } from '@/composables/session-vault';
 const emit = defineEmits(['redo', 'unlocked']);
 
 const unlock = async () => {
-  const { getSession } = useSessionVault();
-  await getSession();
+  const { unlock } = useSessionVault();
+  await unlock();
   emit('unlocked');
 };
 </script>

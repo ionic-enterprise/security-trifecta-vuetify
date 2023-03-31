@@ -1,5 +1,5 @@
 // Composables
-import { useSessionVault } from '@/composables/session-vault';
+import { useAuth } from '@/auth/composables/auth';
 import { createRouter, createWebHistory, NavigationGuardNext, RouteLocationNormalized } from 'vue-router';
 
 const routes = [
@@ -50,9 +50,8 @@ const checkAuthStatus = async (
   next: NavigationGuardNext
 ) => {
   if (to.matched.some((r) => r.meta.requiresAuth)) {
-    const { getSession } = useSessionVault();
-    const session = await getSession();
-    if (!session) {
+    const { isAuthenticated } = useAuth();
+    if (!(await isAuthenticated())) {
       return next('/login');
     }
   }

@@ -110,14 +110,14 @@ describe('LoginPage.vue', () => {
     });
 
     describe('redo login', () => {
-      it('clears the session', async () => {
+      it('clears the session vault', async () => {
         const wrapper = mountPage();
         await flushPromises();
-        const { clearSession } = useSessionVault();
+        const { clear } = useSessionVault();
         const unlock = wrapper.findComponent(AppUnlockCard);
         unlock.vm.$emit('redo');
         await flushPromises();
-        expect(clearSession).toHaveBeenCalledTimes(1);
+        expect(clear).toHaveBeenCalledTimes(1);
       });
 
       it('hides the unlock card and shows the login card', async () => {
