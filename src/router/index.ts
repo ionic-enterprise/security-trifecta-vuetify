@@ -21,6 +21,17 @@ const routes = [
     ],
   },
   {
+    path: '/auth-action-complete',
+    component: () => import('@/layouts/stand-alone/StandAlone.vue'),
+    children: [
+      {
+        path: '',
+        name: 'AuthActionComplete',
+        component: () => import(/* webpackChunkName: "auth" */ '@/auth/AuthActionCompletePage.vue'),
+      },
+    ],
+  },
+  {
     path: '/login',
     component: () => import('@/layouts/stand-alone/StandAlone.vue'),
     children: [
