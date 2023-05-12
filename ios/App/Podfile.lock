@@ -1,0 +1,51 @@
+PODS:
+  - Capacitor (5.0.3):
+    - CapacitorCordova
+  - CapacitorCordova (5.0.3)
+  - CapacitorSplashScreen (5.0.2):
+    - Capacitor
+  - CordovaPlugins (5.0.3):
+    - CapacitorCordova
+    - SQLCipher (~> 4.0)
+  - IonicEnterpriseAuth (5.0.1):
+    - Capacitor
+  - SQLCipher (4.4.3):
+    - SQLCipher/standard (= 4.4.3)
+  - SQLCipher/common (4.4.3)
+  - SQLCipher/standard (4.4.3):
+    - SQLCipher/common
+
+DEPENDENCIES:
+  - "Capacitor (from `../../node_modules/@capacitor/ios`)"
+  - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
+  - "CapacitorSplashScreen (from `../../node_modules/@capacitor/splash-screen`)"
+  - CordovaPlugins (from `../capacitor-cordova-ios-plugins`)
+  - "IonicEnterpriseAuth (from `../../node_modules/@ionic-enterprise/auth`)"
+
+SPEC REPOS:
+  trunk:
+    - SQLCipher
+
+EXTERNAL SOURCES:
+  Capacitor:
+    :path: "../../node_modules/@capacitor/ios"
+  CapacitorCordova:
+    :path: "../../node_modules/@capacitor/ios"
+  CapacitorSplashScreen:
+    :path: "../../node_modules/@capacitor/splash-screen"
+  CordovaPlugins:
+    :path: "../capacitor-cordova-ios-plugins"
+  IonicEnterpriseAuth:
+    :path: "../../node_modules/@ionic-enterprise/auth"
+
+SPEC CHECKSUMS:
+  Capacitor: 304a960e431f9e6f78556554ca71c41c1b2b9680
+  CapacitorCordova: def732a63679698df6fb392bbe6d269a0b61e937
+  CapacitorSplashScreen: bd2a056394ba0b8807e7bb3e746424f67c426e03
+  CordovaPlugins: 0d79c076af888bc2da9560422205f28a23330c03
+  IonicEnterpriseAuth: ae0fc8e77145109b19687ebc7f5bad74cefbb93e
+  SQLCipher: 155ffeafc9ac102e5c9b68e3e9a1297a98a27096
+
+PODFILE CHECKSUM: 5b25f6586c85a64b65c7fa4a28a3aead6a5896dd
+
+COCOAPODS: 1.12.1

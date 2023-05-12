@@ -13,11 +13,11 @@
     "test:dev": "vitest"
   },
   "dependencies": {
-    "@capacitor/android": "~4.7.0",
-    "@capacitor/core": "~4.7.0",
-    "@capacitor/ios": "~4.7.0",
-    "@capacitor/splash-screen": "~4.2.0",
-    "@ionic-enterprise/auth": "~4.0.0",
+    "@capacitor/android": "^5.0.0",
+    "@capacitor/core": "^5.0.0",
+    "@capacitor/ios": "^5.0.0",
+    "@capacitor/splash-screen": "^5.0.0",
+    "@ionic-enterprise/auth": "~5.0.1",
     "@ionic-enterprise/identity-vault": "~5.9.5",
     "@ionic-enterprise/secure-storage": "~3.0.0",
     "@mdi/font": "~7.2.96",
@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@capacitor/assets": "~2.0.4",
-    "@capacitor/cli": "~4.7.0",
+    "@capacitor/cli": "^5.0.0",
     "@ionic/prettier-config": "~3.0.0",
     "@types/node": "~20.1.1",
     "@types/webfontloader": "^1.6.35",
